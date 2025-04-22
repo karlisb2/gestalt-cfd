@@ -1,0 +1,111 @@
+<div class="row">
+  <!-- Sidebar: navigation between views -->
+  <div class="col-md-3 my-3">
+    <div class="list-group">
+      <a href="/mail?view=compose" class="list-group-item list-group-item-action" id="sidebar-compose">Compose</a>
+      <a href="/mail?view=unread" class="list-group-item list-group-item-action" id="sidebar-unread">Unread</a>
+      <a href="/mail" class="list-group-item list-group-item-action" id="sidebar-all">All</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="col-md-9 my-3">
+    <% if (view === 'compose') { %>
+      <!-- Compose form -->
+      <h2>Compose New Message</h2>
+      <form action="/mail/send" method="POST" id="compose-form">
+        <div class="mb-3">
+          <label for="to" class="form-label">To</label>
+          <input type="email" class="form-control" id="to" name="to" required>
+        </div>
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subject" name="subject">
+        </div>
+        <div class="mb-3">
+          <label for="body" class="form-label">Message</label>
+          <textarea class="form-control" id="body" name="body" rows="8" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+
+    <% } else if (view === 'unread') { %>
+      <!-- Unread messages list -->
+      <h2>Unread Messages</h2>
+      <% if (emails && emails.length) { %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">From</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Received</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% emails.forEach(email => { %>
+            <% if (!email.read) { %>
+            <tr>
+              <td><%= email.from %></td>
+              <td><a href="/mail/<%= email.id %>"><%= email.subject %></a></td>
+              <td><%= new Date(email.timestamp).toLocaleString() %></td>
+              <td>
+                <form action="/mail/<%= email.id %>/mark-read" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-outline-success">Mark read</button>
+                </form>
+                <form action="/mail/<%= email.id %>/delete" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% } %>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <p>No unread messages.</p>
+      <% } %>
+
+    <% } else { %>
+      <!-- All messages list -->
+      <h2>All Messages</h2>
+      <% if (emails && emails.length) { %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">From</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Received</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% emails.forEach(email => { %>
+          <tr>
+            <td><%= email.from %></td>
+            <td><a href="/mail/<%= email.id %>"><%= email.subject %></a></td>
+            <td><%= new Date(email.timestamp).toLocaleString() %></td>
+            <td><%= email.read ? 'Read' : 'Unread' %></td>
+            <td>
+              <% if (!email.read) { %>
+              <form action="/mail/<%= email.id %>/mark-read" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-success">Mark read</button>
+              </form>
+              <% } %>
+              <form action="/mail/<%= email.id %>/delete" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+        <p>No messages to display.</p>
+      <% } %>
+    <% } %>
+  </div>
+</div>
+
+<script src="/js/email.js" defer></script>

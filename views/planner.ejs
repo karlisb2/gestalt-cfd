@@ -1,0 +1,38 @@
+<div class="container mt-3">
+    <h2>Day Planner</h2>
+
+    <!-- Create New Task Button -->
+    <button class="btn btn-primary mb-3" id="plannerCreateNewTaskBtn">Create New Task</button>
+
+    <!-- Task List Section -->
+    <div id="tasksList">
+        <!-- Task list will be dynamically populated here -->
+    </div>
+
+    <!-- New Task Form (Initially hidden) -->
+    <div id="newTaskForm" class="mt-4 bg-dark p-4 rounded newtaskform" style="display: none;">
+        <h4 class="text-center text-light mb-4">Create a New Task</h4>
+        <form id="plannerForm">
+            <div class="mb-3">
+                <label for="taskTime" class="form-label text-light">Time</label>
+                <input type="time" class="form-control" id="taskTime" required>
+            </div>
+            <div class="mb-3">
+                <label for="taskTitle" class="form-label text-light">Task Title</label>
+                <input type="text" class="form-control" id="taskTitle" placeholder="Task Title" required>
+            </div>
+            <div class="mb-3">
+                <label for="taskDescription" class="form-label text-light">Task Description</label>
+                <textarea class="form-control" id="taskDescription" placeholder="Task Description" rows="3"></textarea>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary px-4 py-2">Add Task</button>
+                <button type="button" class="btn btn-secondary px-4 py-2" id="cancelBtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/js/planner.js" defer></script>
+<%- contentFor('css') %>
+<link rel="stylesheet" href="/css/planner.css">

@@ -1,0 +1,44 @@
+<% if (success && success.length> 0) { %>
+    <div class="alert text-center alert-success m-3 mb-0">
+        <% success.forEach(msg=> { %>
+            <p class="m-0">
+                <%= msg %>
+            </p>
+        <% }) %>
+    </div>
+<% } %>
+
+
+<div class="container mt-3">
+    <h2 class="mb-4">Account Logs</h2>
+
+    <% if (logs && logs.length > 0) { %>
+        <% logs.forEach(log => { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p><strong>Action:</strong> <%= log.action %></p>
+                    <p><strong>IP Address:</strong> <%= log.ip_address %></p>
+                    <% if (log.geoInfo) { %>
+                        <p>
+                            <strong>Location:</strong>
+                            <%= log.geoInfo.city || 'N/A' %>,
+                            <%= log.geoInfo.region || 'N/A' %>,
+                            <%= log.geoInfo.country || 'N/A' %>
+                        </p>
+                    <% } else { %>
+                        <p><strong>Location:</strong> Not available</p>
+                    <% } %>
+                    <p><strong>Time:</strong> <%= new Date(log.timestamp).toLocaleString() %></p>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>No logs available.</p>
+    <% } %>
+    <div>
+        <a class="btn btn-primary mt-5" role="button" href="/changepassword">Change password</a>
+    </div>
+    <div>
+        <a class="btn btn-danger mt-3 mb-3" role="button" href="/deleteaccount">Delete Account</a>
+    </div>
+</div>

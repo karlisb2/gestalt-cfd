@@ -1,0 +1,16 @@
+<h1>Confirm Account Deletion</h1>
+<p>Type <strong>CONFIRM</strong> below to permanently delete your account and all associated data.</p>
+
+<form action="/deleteaccount" method="POST" class="my-3">
+  <div class="mb-3">
+    <input
+      type="text"
+      name="confirmation"
+      class="form-control"
+      placeholder="Type CONFIRM to proceed"
+      required
+    />
+  </div>
+  <button type="submit" class="btn btn-danger">Delete Account</button>
+  <a href="/account" class="btn btn-secondary ms-2">Cancel</a>
+</form>

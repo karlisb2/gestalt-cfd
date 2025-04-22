@@ -1,0 +1,12 @@
+<h2 class="mt-2"><%= email.subject %></h2>
+<p><strong>From:</strong> <%= email.from %></p>
+<p><strong>To:</strong> <%= email.to %></p>
+<p><strong>Received:</strong> <%= new Date(email.timestamp).toLocaleString() %></p>
+<p><strong>Message:</strong></p>
+<p><%= email.body %></p>
+
+<form action="/mail/<%= email.id %>/delete" method="POST">
+    <button type="submit" class="btn btn-sm btn-outline-danger my-2">Delete</button>
+</form>
+
+<a href="/mail" class="btn btn-sm btn-outline-primary mb-2">Back to inbox</a>
