@@ -15,7 +15,7 @@ const router = express.Router()
 async function getGeoInfo(ip) {
   try {
     // Create an .env file with your API token from ipinfo.io set as TOKEN_IPINFO
-    // const response = await axios.get(`https://ipinfo.io/${ip}?token=${process.env.TOKEN_IPINFO}`)
+    const response = await axios.get(`https://ipinfo.io/${ip}?token=${process.env.TOKEN_IPINFO}`)
     const response = {}
     return response.data // Contains fields like city, region, country, etc.
   } catch (err) {
